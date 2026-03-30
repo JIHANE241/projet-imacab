@@ -99,7 +99,7 @@ Route::middleware(['auth', 'role:candidat'])->prefix('candidat')->name('candidat
     Route::get('/dashboard', [App\Http\Controllers\Candidat\DashboardController::class, 'index'])->name('dashboard');
     Route::get('offres', [App\Http\Controllers\Candidat\OffreController::class, 'index'])->name('offres.index');
     Route::get('offres/{slug}', [App\Http\Controllers\Candidat\OffreController::class, 'show'])->name('offres.show');
-    Route::post('offres/{offre}/postuler', [App\Http\Controllers\Candidat\OffreController::class, 'postuler'])->name('offres.postuler');
+    Route::post('offres/{offre:slug}/postuler', [App\Http\Controllers\Candidat\OffreController::class, 'postuler'])->name('offres.postuler');
     Route::resource('candidatures', App\Http\Controllers\Candidat\CandidatureController::class)->only(['index', 'show']);
     Route::resource('entretiens', App\Http\Controllers\Candidat\EntretienController::class)->only(['index', 'show']);
     Route::get('cv', [App\Http\Controllers\Candidat\CVController::class, 'edit'])->name('cv.edit');

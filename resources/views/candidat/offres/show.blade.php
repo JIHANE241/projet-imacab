@@ -308,7 +308,7 @@
                                </ul>
                          </div>
                       @endif
-                        <form action="{{ route('candidat.offres.postuler', $offre) }}" method="POST" enctype="multipart/form-data">
+                        <form action="{{ route('candidat.offres.postuler', $offre->slug) }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="space-y-6">
         <!-- Nom complet (lecture seule) -->
