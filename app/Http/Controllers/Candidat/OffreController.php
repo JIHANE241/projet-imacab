@@ -101,7 +101,7 @@ class OffreController extends Controller
 
     public function postuler(Request $request, Offre $offre)
     {
-        dd($request->all());
+        
         $request->validate([
             'niveau_etude' => 'required|exists:niveau_etudes,id',
             'niveau_experience' => 'required|string',
@@ -119,7 +119,11 @@ class OffreController extends Controller
             return back()->with('error', 'Vous avez déjà postulé à cette offre.');
         }
 
-        $cvPath = $request->file('cv')->store('cvs', 'public');
+        try {
+    $cvPath = $request->file('cv')->store('cvs', 'public');
+} catch (\Exception $e) {
+    dd($e->getMessage());
+}
 
         Candidature::create([
             'candidat_id' => Auth::id(),
