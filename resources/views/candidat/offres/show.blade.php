@@ -299,7 +299,15 @@
                                 <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" /></svg>
                             </button>
                         </div>
-
+                         @if ($errors->any())
+                            <div class="bg-red-100 text-red-700 p-3 rounded mb-4">
+                                <ul>
+                                   @foreach ($errors->all() as $error)
+                                        <li>{{ $error }}</li>
+                                  @endforeach
+                               </ul>
+                         </div>
+                      @endif
                         <form action="{{ route('candidat.offres.postuler', $offre) }}" method="POST" enctype="multipart/form-data">
     @csrf
     <div class="space-y-6">
