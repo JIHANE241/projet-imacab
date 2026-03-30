@@ -100,42 +100,38 @@ class OffreController extends Controller
     }
 
     public function postuler(Request $request, Offre $offre)
-    {
-        dd($offre);
-        $request->validate([
-            'niveau_etude' => 'required|exists:niveau_etudes,id',
-            'niveau_experience' => 'required|string',
-            'adresse' => 'required|string|max:255',
-            'formation' => 'required|string|max:255',
+{
+    $request->validate([
+        'niveau_etude' => 'required|exists:niveau_etudes,id',
+        'niveau_experience' => 'required|string',
+        'adresse' => 'required|string|max:255',
+        'formation' => 'required|string|max:255',
+        'cv' => 'required|file|mimes:pdf,doc,docx|max:2048',
+    ]);
 
-            'cv' => 'required|file|mimes:pdf,doc,docx|max:2048',
-        ]);
+    $existing = Candidature::where('candidat_id', Auth::id())
+                ->where('offre_id', $offre->id)
+                ->exists();
 
-      
-        $existing = Candidature::where('candidat_id', Auth::id())
-                    ->where('offre_id', $offre->id)
-                    ->exists();
-        if ($existing) {
-            return back()->with('error', 'Vous avez déjà postulé à cette offre.');
-        }
-
-        dd($request->file('cv'));
-
-        Candidature::create([
-            'candidat_id' => Auth::id(),
-            'offre_id' => $offre->id,
-            'niveau_experience' => $request->niveau_experience,
-            'adresse' => $request->adresse,
-           'formation' => $request->formation,
-            'niveau_etude_id' => $request->niveau_etude,
-            'statut' => 'en_attente',
-            'date_candidature' => now(),
-            'cv_path' => $cvPath,
-        ]);
-
-        
-
-        return redirect()->route('candidat.candidatures.index')
-            ->with('success', 'Candidature envoyée !');
+    if ($existing) {
+        return back()->with('error', 'Vous avez déjà postulé à cette offre.');
     }
+
+    $cvPath = $request->file('cv')->store('cvs', 'public');
+
+    Candidature::create([
+        'candidat_id' => Auth::id(),
+        'offre_id' => $offre->id,
+        'niveau_experience' => $request->niveau_experience,
+        'adresse' => $request->adresse,
+        'formation' => $request->formation,
+        'niveau_etude_id' => $request->niveau_etude,
+        'statut' => 'en_attente',
+        'date_candidature' => now(),
+        'cv_path' => $cvPath,
+    ]);
+
+    return redirect()->route('candidat.candidatures.index')
+        ->with('success', 'Candidature envoyée !');
+}
 }
