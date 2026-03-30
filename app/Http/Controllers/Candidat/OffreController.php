@@ -119,11 +119,7 @@ class OffreController extends Controller
             return back()->with('error', 'Vous avez déjà postulé à cette offre.');
         }
 
-        try {
-    $cvPath = $request->file('cv')->store('cvs', 'public');
-} catch (\Exception $e) {
-    dd($e->getMessage());
-}
+        $cvPath = $request->file('cv')->store('cvs', 'public');
 
         Candidature::create([
             'candidat_id' => Auth::id(),
