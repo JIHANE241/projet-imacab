@@ -28,6 +28,7 @@ class DatabaseSeeder extends Seeder
         NiveauExperienceSeeder::class,
         VilleSeeder::class,
         AdminUserSeeder::class,
+        NiveauEtudeSeeder::class,
     ]);
     }
 }
