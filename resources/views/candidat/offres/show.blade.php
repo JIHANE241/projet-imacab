@@ -338,13 +338,13 @@
 <!-- Adresse -->
 <div>
     <label class="block text-sm font-medium text-gray-700 mb-1">Adresse</label>
-    <input type="text" name="adresse" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" placeholder="Ville, quartier...">
+    <input type="text" name="adresse" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" placeholder="Ville, quartier..." required>
 </div>
 
 <!-- Formation -->
 <div>
     <label class="block text-sm font-medium text-gray-700 mb-1">Formation</label>
-    <input type="text" name="formation" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" placeholder="Dernier diplôme obtenu">
+    <input type="text" name="formation" class="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500" placeholder="Dernier diplôme obtenu" required>
 </div>
 
 
