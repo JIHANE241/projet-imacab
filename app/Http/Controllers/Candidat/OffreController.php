@@ -101,6 +101,7 @@ class OffreController extends Controller
 
     public function postuler(Request $request, Offre $offre)
     {
+        dd($request->all());
         $request->validate([
             'niveau_etude' => 'required|exists:niveau_etudes,id',
             'niveau_experience' => 'required|string',
