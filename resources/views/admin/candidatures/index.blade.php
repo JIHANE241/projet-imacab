@@ -173,7 +173,7 @@
                                 
                                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Candidat</th>
                                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Offre</th>
-                                    <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Exp.</th>
+                                    
                                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Adresse</th>
                                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Formation</th>
                                     <th class="px-4 py-3 text-left text-xs font-semibold text-gray-600 uppercase tracking-wider">Commentaire RD</th>
@@ -195,7 +195,6 @@
                                         </div>
                                     </td>
                                     <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ $c->offre->titre }}</td>
-                                    <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ $c->niveau_experience ? Str::title(str_replace('_', ' ', $c->niveau_experience)) : '-' }}</td>
                                     <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ Str::limit($c->adresse ?? '-', 15) }}</td>
                                     <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ Str::limit($c->formation ?? '-', 15) }}</td>
                                     <td class="px-4 py-3 whitespace-nowrap text-sm text-gray-700">{{ Str::limit($c->commentaire_rd ?? '-', 15) }}</td>
