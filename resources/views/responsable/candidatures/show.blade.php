@@ -178,7 +178,7 @@
                                 CV
                             </dt>
                             <dd class="text-base text-gray-900">
-                                <a href="{{ route('admin.candidatures.cv', $candidature->id) }}" target="_blank" class="text-[#970d0d] hover:underline flex items-center gap-1">
+                                <a href="{{ route('responsable.candidatures.cv', $candidature->id) }}" target="_blank" class="text-[#970d0d] hover:underline flex items-center gap-1">
                                     <i class="fas fa-download"></i> Télécharger
                                 </a>
                             </dd>
