@@ -52,11 +52,14 @@ class CandidatureController extends Controller
         return view('admin.candidatures.index', compact('directions', 'selectedDirection', 'candidatures', 'stats'));
     }
 
-    public function show(Candidature $candidature)
-    {
-        $candidature->load(['candidat', 'offre.direction', 'entretien']);
-        return view('admin.candidatures.show', compact('candidature'));
-    }
+    public function show($id)
+{
+    $candidature = Candidature::withTrashed()
+        ->with(['candidat', 'offre.direction', 'entretien'])
+        ->findOrFail($id);
+
+    return view('admin.candidatures.show', compact('candidature'));
+}
 
     public function destroy(Candidature $candidature)
     {
@@ -78,23 +81,24 @@ class CandidatureController extends Controller
         return back()->with('success', 'Candidature acceptée.');
     }
 
-    public function refuser(Candidature $candidature)
-    {
-        $candidature->update(['statut' => 'refusee']);
-         $user = $candidature->candidat;
+    public function refuser(Candidature $candidature)  
+{  
+    $candidature->update(['statut' => 'refusee']);  
 
-       $user->notify(new \App\Notifications\CandidatureStatutChange($candidature));
+    $user = $candidature->candidat;  
+    $user->notify(new \App\Notifications\CandidatureStatutChange($candidature));  
 
-     
-        return back()->with('success', 'Candidature refusée.');
-    }
+    return back()->with('success', 'Candidature refusée.');  
+}
 
-    public function voirCv(Candidature $candidature)
+    public function voirCv($id)
 {
+    $candidature = Candidature::withTrashed()->findOrFail($id);
+
     $path = storage_path('app/public/' . $candidature->cv_path);
 
-    if (!$candidature->cv_path || !file_exists($path)) {
-        abort(404);
+    if (!file_exists($path)) {
+        return back()->with('error', 'CV introuvable.');
     }
 
     return response()->file($path);

@@ -89,7 +89,7 @@
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $c->candidat->name }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">{{ $c->offre->titre }}</td>
                             <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-700">
-                                <a href="{{ route('admin.candidatures.cv', $c) }}" target="_blank" class="text-indigo-600 hover:text-indigo-900 flex items-center">
+                                <a href="{{ route('admin.candidatures.cv', $c->id) }}" target="_blank" class="text-indigo-600 hover:text-indigo-900 flex items-center">
                                     <svg class="w-4 h-4 mr-1" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4" />
                                     </svg>

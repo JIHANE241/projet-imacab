@@ -14,11 +14,10 @@ class ArchiveController extends Controller
     public function index()
     {
         // CV refusés : candidatures refusées avec CV
-        $cvRefuses = Candidature::withTrashed()
-         ->where('statut', 'refusee')
-         ->whereNotNull('cv_path')
-         ->with('candidat')
-         ->get();
+        $cvRefuses = Candidature::where('statut', 'refusee')
+        ->whereNotNull('cv_path')
+        ->with('candidat', 'offre')
+        ->get();
 
         // Offres fermées (soft delete ou statut fermée)
         $offresFermees = Offre::where('statut', 'fermée')->withTrashed()->get();
@@ -27,10 +26,9 @@ class ArchiveController extends Controller
         $offresSupprimees = Offre::onlyTrashed()->get();
 
         /// Candidatures refusées (toutes, qu'elles soient supprimées ou non)
-    $candidaturesRefusees = Candidature::withTrashed()
-        ->where('statut', 'refusee')
-        ->with('candidat', 'offre')
-        ->get();
+    $candidaturesRefusees = Candidature::where('statut', 'refusee')
+    ->with('candidat', 'offre')
+    ->get();
 
     return view('admin.archives.index', compact(
         'cvRefuses',
@@ -49,17 +47,14 @@ class ArchiveController extends Controller
             $offre->update(['statut' => 'brouillon']);
             break;
         case 'candidature':
-            // 1. Chercher une candidature soft‑deleted
-            $candidature = Candidature::onlyTrashed()->find($id);
-            if ($candidature) {
-                // Si elle est supprimée, on la restaure
-                $candidature->restore();
-            } else {
-                // Sinon, on la cherche normalement et on change son statut
-                $candidature = Candidature::findOrFail($id);
-                $candidature->update(['statut' => 'en_attente']);
-            }
-            break;
+    $candidature = Candidature::withTrashed()->findOrFail($id);
+
+    if ($candidature->trashed()) {
+        $candidature->restore();
+    } else {
+        $candidature->update(['statut' => 'en_attente']);
+    }
+    break;
         default:
             return back()->with('error', 'Type non pris en charge.');
     }
@@ -77,11 +72,13 @@ class ArchiveController extends Controller
                 break;
             case 'candidature':
                 $candidature = Candidature::onlyTrashed()->findOrFail($id);
-                if ($candidature->cv_path) {
-                    Storage::disk('public')->delete($candidature->cv_path);
-                }
-                $candidature->forceDelete();
-                break;
+
+               if ($candidature->cv_path) {
+                     Storage::disk('public')->delete($candidature->cv_path);
+               }
+
+               $candidature->forceDelete();
+               break;
             default:
                 return back()->with('error', 'Type non pris en charge.');
         }
