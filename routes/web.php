@@ -123,6 +123,7 @@ Route::middleware(['auth', 'role:responsable'])->prefix('responsable')->name('re
     Route::resource('offres', ResponsableOffreController::class)->except(['show']);
     Route::get('offres/{slug}', [ResponsableOffreController::class, 'show'])->name('offres.show');
 
+    Route::get('/candidatures/{candidature}/cv', [ResponsableCandidatureController::class, 'voirCv'])->name('candidatures.cv');
     Route::resource('candidatures', ResponsableCandidatureController::class)->only(['index', 'show']);
     Route::post('candidatures/{candidature}/accepter', [ResponsableCandidatureController::class, 'accepter'])->name('candidatures.accepter');
     Route::post('candidatures/{candidature}/refuser', [ResponsableCandidatureController::class, 'refuser'])->name('candidatures.refuser');
@@ -140,7 +141,7 @@ Route::middleware(['auth', 'role:responsable'])->prefix('responsable')->name('re
 
     Route::post('candidatures/{candidature}/comment', [ResponsableCandidatureController::class, 'addComment'])->name('candidatures.comment');
     Route::post('candidatures/{candidature}/evaluate', [ResponsableCandidatureController::class, 'evaluate'])->name('candidatures.evaluate');
-    Route::get('/candidatures/{candidature}/cv', [ResponsableCandidatureController::class, 'voirCv'])->name('candidatures.cv');
+    
 });
 
 require __DIR__.'/auth.php';

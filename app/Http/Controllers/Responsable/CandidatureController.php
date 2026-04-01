@@ -99,10 +99,8 @@ class CandidatureController extends Controller
     }
    
 
-public function voirCv($id)
+public function voirCv(Candidature $candidature)
 {
-    $candidature = Candidature::withTrashed()->findOrFail($id);
-
     if ($candidature->offre->direction_id != Auth::user()->direction_id) {
         abort(403);
     }
@@ -113,6 +111,6 @@ public function voirCv($id)
         return back()->with('error', 'CV introuvable.');
     }
 
-    return response()->file($path);
+    return response()->download($path);
 }
 }
