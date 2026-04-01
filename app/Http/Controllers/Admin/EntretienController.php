@@ -15,8 +15,8 @@ class EntretienController extends Controller
 public function index(Request $request)
 {
   
-    $query = Entretien::with(['candidature.candidat', 'candidature.offre.direction']);
-    $todayEntretiens = Entretien::whereDate('date', now())->where('statut', 'planifie')->get();
+    $query = Entretien::with(['candidature' => function ($q) {$q->withTrashed()->with(['candidat', 'offre.direction']);}]);
+    $todayEntretiens = Entretien::with(['candidature' => function ($q) {$q->withTrashed()->with('candidat');}])->whereDate('date', now())->where('statut', 'planifie')->get();
 
     
     if ($request->filled('search')) {

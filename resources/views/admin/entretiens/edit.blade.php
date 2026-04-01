@@ -51,7 +51,7 @@
                             </svg>
                         </div>
                         <input type="text" id="candidature_id_display"
-                               value="{{ $entretien->candidature->candidat->name }} - {{ $entretien->candidature->offre->titre }}"
+                               value="{{ optional($entretien->candidature?->candidat)->name ?? '---' }} - {{ optional($entretien->candidature?->offre)->titre ?? '---' }}"
                                class="pl-10 pr-4 py-2 w-full border-0 bg-transparent focus:ring-0 text-gray-700" disabled>
                     </div>
                     <input type="hidden" name="candidature_id" value="{{ $entretien->candidature_id }}">

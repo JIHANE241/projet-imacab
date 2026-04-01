@@ -45,7 +45,7 @@
                         </svg>
                         Candidat
                     </dt>
-                    <dd class="mt-1 text-base text-gray-900">{{ $entretien->candidature->candidat->name }}</dd>
+                    <dd class="mt-1 text-base text-gray-900">{{ optional($entretien->candidature?->candidat)->name ?? '---' }}</dd>
                 </div>
 
                 <!-- Offre -->
@@ -56,7 +56,7 @@
                         </svg>
                         Offre
                     </dt>
-                    <dd class="mt-1 text-base text-gray-900">{{ $entretien->candidature->offre->titre }}</dd>
+                    <dd class="mt-1 text-base text-gray-900">{{ optional($entretien->candidature?->offre)->titre ?? '---' }}</dd>
                 </div>
 
                 <!-- Date -->
