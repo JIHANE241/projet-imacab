@@ -140,6 +140,7 @@ Route::middleware(['auth', 'role:responsable'])->prefix('responsable')->name('re
 
     Route::post('candidatures/{candidature}/comment', [ResponsableCandidatureController::class, 'addComment'])->name('candidatures.comment');
     Route::post('candidatures/{candidature}/evaluate', [ResponsableCandidatureController::class, 'evaluate'])->name('candidatures.evaluate');
+    Route::get('/candidatures/{candidature}/cv', [ResponsableCandidatureController::class, 'voirCv'])->name('candidatures.cv');
 });
 
 require __DIR__.'/auth.php';

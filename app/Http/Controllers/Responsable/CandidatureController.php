@@ -7,8 +7,9 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\Candidature;
 use App\Notifications\CandidatureCommented;
-use App\Notifications\CandidatureEvaluated; // ← Ajout indispensable
+use App\Notifications\CandidatureEvaluated; 
 use App\Models\User;
+ use Illuminate\Support\Facades\Storage;
 
 class CandidatureController extends Controller
 {
@@ -96,4 +97,22 @@ class CandidatureController extends Controller
 
         return back()->with('success', 'Votre évaluation a été enregistrée.');
     }
+   
+
+public function voirCv($id)
+{
+    $candidature = Candidature::withTrashed()->findOrFail($id);
+
+    if ($candidature->offre->direction_id != Auth::user()->direction_id) {
+        abort(403);
+    }
+
+    $path = storage_path('app/public/' . $candidature->cv_path);
+
+    if (!file_exists($path)) {
+        return back()->with('error', 'CV introuvable.');
+    }
+
+    return response()->file($path);
+}
 }
