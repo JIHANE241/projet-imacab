@@ -111,6 +111,6 @@ public function voirCv(Candidature $candidature)
         return back()->with('error', 'CV introuvable.');
     }
 
-    return response()->download($path);
+    return response()->file($path);
 }
 }
