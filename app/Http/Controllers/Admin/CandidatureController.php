@@ -93,15 +93,13 @@ class CandidatureController extends Controller
 
     public function voirCv($id)
 {
-    $candidature = Candidature::withTrashed()->findOrFail($id);
+    $candidature = Candidature::findOrFail($id);
 
-    $path = storage_path('app/public/' . $candidature->cv_path);
-
-    if (!file_exists($path)) {
-        return back()->with('error', 'CV introuvable.');
+    if (!$candidature->cv_path || !Storage::disk('public')->exists($candidature->cv_path)) {
+        abort(404, 'CV introuvable');
     }
 
-    return response()->file($path);
+    return Storage::disk('public')->response($candidature->cv_path);
 }
 public function updateStatut(Request $request, Candidature $candidature)
 {
